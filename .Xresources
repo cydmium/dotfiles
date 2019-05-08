@@ -1,0 +1,32 @@
+*background: 	#282828
+*foreground:	#ebdbb2
+*cursor:	#ebdbb2
+! Black and Dark Grey
+*color0:	#282828
+*color8:	#928374
+! Dark Red and Red
+*color1:	#cc241d
+*color9:	#fb4934
+! Dark Green and Green
+*color2:	#98971a
+*color10:	#b8bb26
+! Dark Yellow and Yellow
+*color3:	#d79921
+*color11:	#fabd2f
+! Dark Blue and Blue
+*color4:	#458588
+*color12:	#83a598
+! Dark Magenta and Magenta
+*color5:	#b16286
+*color13:	#d3869b
+! Dark Cyan and Cyan
+*color6:	#689d6a
+*color14:	#8ec07c
+! Light Grey and White
+*color7:	#a89984
+*color15:	#ebdbb2
+
+URxvt.background:	#282828
+URxvt.font:	xft:Inconsolata for Powerline:style=Medium:pixelsize=18
+URxvt.cursorColor:	#ebdbb2
+URxvt.scrollBar:	false

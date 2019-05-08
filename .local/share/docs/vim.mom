@@ -1,0 +1,54 @@
+.de LI
+.LIST
+.SHIFT_LIST 10p
+..
+.PARA_SPACE 1m
+.TITLE "Vim \(en The Best Editor"
+.AUTHOR "David Richardson"
+.DOCTYPE DEFAULT
+.PRINTSTYLE TYPESET
+.PT_SIZE 10
+.START
+To navigate this document, you can use vim keys (\f(CWh/j/k/l\fP).
+Additional movement commands are described in the Zathura document via \f(CWMod+F2\fP or \f(CWman zathura\fP.
+.HEADING 1 "Hello!"
+.HEADING 2 "My philosophy for vim configuration"
+Before I get into what I think, know there is no correct way to use vim.
+Everyone will use it a little differently, and that is okay.
+These next items are in order of priority.
+.LIST
+.ITEM
+\fBUsability\fP \(en
+The most important aspect of my vim configuration is that it should do everything I want it to do.
+If that means a plugin is best suited for the job, then that plugin gets installed.
+If that means a default configuration is best, then the default goes.
+.ITEM
+\fBBuilt-Ins First\fP \(en
+If vim has a capability built into it, that should be prioritized over an external plugin where possible. 
+That does not mean that capability will not be rebound to be easier to use. 
+This DOES NOT mean I dislike plug-ins.
+.ITEM
+\fBBeauty\fP \(en
+Lastly, the editor should look nice. 
+This doesn't affect the actual usage, but it does  make everything a little more pleasant.
+.LIST OFF
+.HEADING 1 "Cheatsheet"
+All of these keybinds are either native to vim, or set in my vimrc file. 
+Everything in this document can be customized by editing the vimrc.
+If you are using my complete configuration, you can quickly open the file with \f(CWevim\fP.
+.HEADING 2 "Keybinds"
+Many of these keybinds can be prefaced by a number to repeat the command [count] times.
+If there is no count preceding the command, the default is generally 1.
+I will do my best to indicate where this is the case.
+.LIST
+.ITEM
+\f(CWh\fP \(en Move to the left [count] character(s)
+.ITEM
+\f(CWj\fP \(en Move down [count] lines
+.FOOTNOTE
+Both \f(CWj\fP and \f(CWk\fP have been rebound to \f(CWgj\fP and \f(CWgk\fP in my configuration.
+This allows them to move up/down based on how the lines are displayed when lines wrap.
+.FOOTNOTE OFF
+.ITEM
+\f(CWk\fP \(en Move up [count] lines
+.LIST OFF

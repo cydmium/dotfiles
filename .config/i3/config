@@ -129,6 +129,11 @@ bar {
 	bindsym $mod+m			exec --no-startup-id matlab -desktop
 	# }}}
 
+	# Function Keys {{{
+	bindsym $mod+F1			exec --no-startup-id groff -mom $HOME/.local/share/docs/overview.mom -Tpdf | zathura -
+	bindsym $mod+F2			exec --no-startup-id docs
+	# }}}
+
 # }}}
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -213,3 +218,4 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+# vim: set local foldmethod=marker

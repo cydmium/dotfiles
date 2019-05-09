@@ -80,9 +80,6 @@ source '/home/david/.zplugin/bin/zplugin.zsh'
 ### End of Zplugin's installer chunk
 
 # Plugin Installation {{{
-# used for themes
-zplugin ice wait"0" lucid
-zplugin snippet OMZ::lib/git.zsh
 # Git plugin
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::plugins/git/git.plugin.zsh
@@ -92,9 +89,6 @@ zplugin load rupa/z
 # Improved vi-like functionality
 zplugin ice wait"0" lucid
 zplugin snippet OMZ::plugins/vi-mode/vi-mode.plugin.zsh
-# Async capabilities
-zplugin ice wait"0" lucid
-zplugin load mafredri/zsh-async
 # Colored Man Pages
 zplugin ice wait"0" lucid
 zplugin load ael-code/zsh-colored-man-pages
@@ -105,25 +99,17 @@ zplugin load MichaelAquilina/zsh-you-should-use
 zplugin ice wait"0" atload"_zsh_autosuggest_start" lucid
 zplugin load zsh-users/zsh-autosuggestions
 # Powerline Prompt
-zplugin light bhilburn/powerlevel9k
-#zplugin light romkatv/powerlevel10k
-# Syntax Highlighting
-zplugin ice wait"0" atinit"zpcompinit; zpcdreplay" atload"FAST_HIGHLIGHT_STYLES[path]='bold'; FAST_HIGHLIGHT_STYLES[globbing]='fg=yellow'; FAST_HIGHLIGHT_STYLES[precommand]='fg=yellow,bold'" lucid
-zplugin light zdharma/fast-syntax-highlighting
-# }}}
-
-# Plugin Settings {{{
-# Autosuggest
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-ZSH_AUTOSUGGEST_USE_ASYNC=1
-bindkey '^j' autosuggest-accept
-bindkey '^k' autosuggest-execute
-bindkey '^l' autosuggest-fetch
-
 # Powerline {{{
 DEFAULT_USER=david
-POWERLEVEL9K_MODE='nerdfont-patched'
-POWERLEVEL9K_DISABLE_GITSTATUS="true"
+POWERLEVEL9K_VCS_STASH_ICON="\ue701"
+POWERLEVEL9K_VCS_STAGED_ICON="\uf187"
+POWERLEVEL9K_VCS_BOOKMARK_ICON="\uf461"
+POWERLEVEL9K_VCS_UNTRACKED_ICON="\uf059"
+POWERLEVEL9K_VCS_UNSTAGED_ICON="\uf06a"
+POWERLEVEL9K_VCS_GIT_GITHUB_ICON="\uf408"
+POWERLEVEL9K_TODO_ICON="\uf4a0"
+POWERLEVEL9K_ETC_ICON="\uf6d7"
+POWERLEVEL9K_CARRIAGE_RETURN_ICON="\uf810"
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
 POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='153'
 POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='236'
@@ -141,4 +127,45 @@ POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" "
 POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 # }}}
+zplugin light bhilburn/powerlevel9k
+#zplugin light romkatv/powerlevel10k
+# Syntax Highlighting
+zplugin ice wait"0" atinit"zpcompinit; zpcdreplay" atload"FAST_HIGHLIGHT_STYLES[path]='bold'; FAST_HIGHLIGHT_STYLES[globbing]='fg=yellow'; FAST_HIGHLIGHT_STYLES[precommand]='fg=yellow,bold'" lucid
+zplugin light zdharma/fast-syntax-highlighting
 # }}}
+
+# Plugin Settings {{{
+# Autosuggest
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_USE_ASYNC=1
+bindkey '^j' autosuggest-accept
+bindkey '^k' autosuggest-execute
+bindkey '^l' autosuggest-fetch
+# }}}
+
+source /usr/share/fzf/completion.zsh
+source /usr/share/fzf/key-bindings.zsh
+export FZF_DEFAULT_OPTS='--height 40%'
+# fe - opens file in $EDITOR instead of returning it to command line
+fe() {
+  local files
+  IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}
+
+# fd - cd to selected directory
+fd() {
+  local dir
+  dir=$(find ${1:-.} -path '*/\.*' -prune \
+                  -o -type d -print 2> /dev/null | fzf +m) &&
+  cd "$dir"
+}
+
+# fbr - checkout git branch
+fbr() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}

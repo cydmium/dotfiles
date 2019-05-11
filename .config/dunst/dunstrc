@@ -1,7 +1,7 @@
 [global]
     monitor = 0
     follow = keyboard
-    geometry = "300x5-0+24"
+    geometry = "600x10-0+48"
     indicate_hidden = yes
     shrink = yes
     transparency = 20
@@ -24,7 +24,7 @@
     sort = yes
 
     idle_threshold = 120
-    font = Monospace 14
+    font = Monospace 28
     line_height = 0
     markup = full
 
@@ -55,7 +55,7 @@
     icon_position = off
 
     # Scale larger icons down to this size, set to 0 to disable
-    max_icon_size = 40
+    max_icon_size = 80
 
     # Paths to default icons.
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/

@@ -20,8 +20,8 @@
 
 	# Gaps Setup {{{
 	for_window [class="^.*"] border pixel 2
-	gaps inner 15
-	gaps outer 15
+	gaps inner 30
+	gaps outer 30
 	# }}}
 
 	# Variable Definitons {{{
@@ -60,15 +60,15 @@
 	# Set Screen resolution
 	#exec --no-startup-id $HOME/.screenlayout/fullRes.sh
 	# feh for background
-	exec --no-startup-id $HOME/.fehbg"
+	exec_always --no-startup-id feh --bg-scale '/home/david/.config/background.jpg' 
 
 # }}}
 
 # Bar {{{
 bar {
-	font pango:mono 30
+	font pango:Mono 30
         status_command i3blocks
-	position bottom
+	position top
 	mode dock
 	modifier None
 }
@@ -95,7 +95,7 @@ bar {
 	bindsym $mod+Shift+q		[con_id="__focused__" instance="^(?!dropdown_).*$"] exec --no-startup-id kill -9 `xdotool getwindowfocus getwindowpid`
 
 	bindsym $mod+t			split toggle
-	bindsym $mod+Shift+t		gaps inner current set 15; gaps outer current set 15
+	bindsym $mod+Shift+t		gaps inner current set 30; gaps outer current set 30
 
 	bindsym $mod+r 			exec $term -e sh -c "$FILE && exec zsh"
 

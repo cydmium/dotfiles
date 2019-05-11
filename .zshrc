@@ -145,7 +145,7 @@ bindkey '^l' autosuggest-fetch
 
 source /usr/share/fzf/completion.zsh
 source /usr/share/fzf/key-bindings.zsh
-export FZF_DEFAULT_OPTS='--height 40%'
+export FZF_DEFAULT_OPTS='--height 40% --border'
 # fe - opens file in $EDITOR instead of returning it to command line
 fe() {
   local files

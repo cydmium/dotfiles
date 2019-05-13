@@ -41,9 +41,9 @@
 	for_window [instance="dropdown_*"] move scratchpad
 	for_window [instance="dropdown_*"] sticky enable
 	for_window [instance="dropdown_*"] scratchpad show
-	for_window [instance="dropdown_tmuxdd"] resize set 625 450
+	for_window [instance="dropdown_tmuxdd"] resize set 1250 900
 	for_window [instance="dropdown_tmuxdd"] border pixel 3
-	for_window [instance="dropdown_dropdowncalc"] resize set 800 300
+	for_window [instance="dropdown_dropdowncalc"] resize set 1600 600
 	for_window [instance="dropdown_dropdowncalc"] border pixel 2
 	for_window [instance="dropdown_*"] move position center
 
@@ -61,6 +61,8 @@
 	#exec --no-startup-id $HOME/.screenlayout/fullRes.sh
 	# feh for background
 	exec_always --no-startup-id feh --bg-scale '/home/david/.config/background.jpg' 
+	# Sync calendar
+	exec --no-startup-id calcurse-caldav
 
 # }}}
 
@@ -108,7 +110,7 @@ bar {
 	bindsym $mod+u			exec --no-startup-id ddspawn tmuxdd
 	bindsym $mod+Shift+u 		exec --no-startup-id i3resize down
 
-	bindsym $mod+i			exec $term -e calcurse -D ~/.config/calcurse
+	bindsym $mod+i			exec $term -e calcurse
 	bindsym $mod+Shift+i 		exec --no-startup-id i3resize up
 
 	bindsym $mod+o			exec $term -e htop

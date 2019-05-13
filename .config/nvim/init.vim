@@ -45,3 +45,9 @@ set autoindent
 
 """ Extra Options
 set modelines=1
+
+""" Autocommands
+augroup vimrc
+    autocmd!
+    autocmd bufwritepost $MYVIMRC source $MYVIMRC
+augroup END

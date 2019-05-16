@@ -61,7 +61,7 @@ alias ls='ls --color'
 alias r=$FILE
 
 # Edit Configs
-alias evim='$EDITOR $VIMRC'
+alias evim='$EDITOR $VIMRC $VIMCONF'
 alias efile='$EDITOR $FILERC'
 alias ei3='$EDITOR $I3CONF'
 alias ezsh='$EDITOR $ZSHRC'

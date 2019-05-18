@@ -66,7 +66,7 @@ alias efile='$EDITOR $FILERC'
 alias ei3='$EDITOR $I3CONF'
 alias ezsh='$EDITOR $ZSHRC'
 alias ecomp='$EDITOR $COMPRC'
-alias eX='$EDITOR $XINITRC $XRESOURCES'
+alias eX='$EDITOR $XRESOURCES $XINITRC'
 
 # Sneaky Vim Habit
 alias :wq='exit'

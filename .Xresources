@@ -31,3 +31,12 @@ URxvt.letterSpace:	1
 URxvt.font:	xft:Inconsolata for Powerline:sytle=Medium:pixelsize=36,xft:Inconsolata Nerd Font Mono,xft:Powerlinesymbols,xft:FontAwesome
 URxvt.cursorColor:	#ebdbb2
 URxvt.scrollBar:	false
+
+! Extensions
+URxvt.perl-ext-common: default,resize-font,url-select,keyboard-select
+! Url-Select
+URxvt.keysym.Control-f: perl:url-select:select_next
+URxvt.url-select.underline: true
+URxvt.url-select.launcher: firefox
+! Keyboard-select
+URxvt.keysym.Control-s: perl:keyboard-select:activate

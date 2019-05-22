@@ -65,6 +65,8 @@
 	exec_always --no-startup-id feh --bg-scale '/home/david/.config/background.jpg' 
 	# Sync calendar
 	exec --no-startup-id calcurse-caldav
+	# Location Service
+	exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 
 # }}}
 
@@ -141,6 +143,11 @@ bar {
 	bindsym $mod+F3			exec --no-startup-id dmenuread
 	# }}}
 
+	# Arrow Keys {{{
+	bindsym $mod+Up			exec --no-startup-id adjustbrightness 100
+	bindsym $mod+Down		exec --no-startup-id adjustbrightness -100
+	# }}}
+
 # }}}
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -160,23 +167,11 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
-
 # move focused window
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle

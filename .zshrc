@@ -61,12 +61,12 @@ alias ls='ls --color'
 alias r=$FILE
 
 # Edit Configs
-alias evim='$EDITOR $VIMRC $VIMCONF'
+alias evim='$EDITOR $VIMRC'
 alias efile='$EDITOR $FILERC'
 alias ei3='$EDITOR $I3CONF'
 alias ezsh='$EDITOR $ZSHRC'
 alias ecomp='$EDITOR $COMPRC'
-alias eX='$EDITOR $XRESOURCES $XINITRC'
+alias eX='$EDITOR $XRESOURCES'
 
 # Sneaky Vim Habit
 alias :wq='exit'

@@ -17,7 +17,7 @@ export BROWSER="firefox"
 export BROWSER_TERM="w3m"
 export WWW_HOME="google.com"
 
-export PATH="$PATH:$HOME/.local/bin:$(du "$HOME/.scripts/" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
+export PATH="$PATH:$HOME/.local/bin:$(du "$HOME/.local/bin" | cut -f2 | tr '\n' ':' | sed 's/:*$//')"
 export RANGER_LOAD_DEFAULT_RC=FALSE
 export FILERC=$HOME/.config/ranger/rc.conf
 export I3CONF=$HOME/.config/i3/config

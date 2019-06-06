@@ -3,121 +3,115 @@
 .SHIFT_LIST 10p
 ..
 .PARA_SPACE 1m
-.TITLE "A Guide to Using This System"
+.TITLE "System Overview"
 .AUTHOR "David Richardson"
 .DOCTYPE DEFAULT
 .PRINTSTYLE TYPESET
 .PT_SIZE 10
 .START
-If you are viewing this document through the i3 shortcut, you are in a program called Zathura. 
-To navigate the document, you should use vim keys (\f(CWh/j/k/l\fP).
-To adjust zoom settings, you can use \f(CW+\fP and \f(CW-\fP to zoom in or out, or you can use \f(CWs\fP to zoom to the window width (revert with \f(CWa\fP).
-\f(CWf\fP will highlight links which can then be followed using a number + \f(CWEnter\fP.
-To close the pdf, simply press \f(CWq\fP.
-All of these are default to Zathura, but you can add additional customizations in \f(CW~/.config/zathura/zathurarc\fP.
-.LIST
-.ITEM
-\f(CWMod+F1\fP will pull this document up for your reference
-.ITEM
-\f(CWMod\fP refers to the key set in the i3 config.
-In this configuration, it is the Super Key, aka the Windows Key.
-.LIST OFF
+To navigate this document, you can use vim movement keys.
+Additional movement commands are available in the zathura document, or via \f(CWman zathura\fP.
 .HEADING 1 "Hello!"
-.HEADING 2 "My philosophy for this installation:"
-Much of this installation as has been guided by
-.PDF_WWW_LINK "https://lukesmith.xyz" "Luke Smith."
-In particular, his LARBS post installation script has given me significant inspiration for how to configure and work with my own system.
-I even stole the layout of this document from his readme.mom (partly because I don't know how to use groff at all).
+.HEADING 2 "Document Goals"
+This document is intended to provide an overview of the different programs that make up the system.
+It will give the program that is being used, as well as some additional options if you wish to explore other programs.
+It is my hope that this document provides a better understanding of why I selected the programs I did and what areas can be improved.
+.HEADING 2 "Guiding Principles"
+I want to start by saying a large portion of this document is my personal opinion.
+If you disagree with me, great!
+Now, what makes software good.
 .LIST
 .ITEM
-\fBEase of Use\fP \(en
-Anything you want to do should be easy to do.
-The system should be configured in such a way that keybindings are easy to remember and intuitive.
-All thinking should be applied to completing the task, not how to setup the environment necessary to perform well.
+\fBSimplicity\fP \(en
+A program should do one thing, and it should do it well. 
+Features are not always a good thing.
+Once a program starts adding features, it quickly becomes difficult to maintain.
+Additionally, if I don't need the feature, or another program implements the feature better, the program is now unnecessarily bloated.
+In general, this also allows programs to be modular and easily replaceable. 
+If a single program does too much, it becomes difficult to replace when a better alternative comes available; however, it is easy to replace a simple program with a better simple program.
 .ITEM
-\fBMinimalistic Where Possible\fP \(en
-Programs should not be unnecessarily bloated; however, some programs (MATLAB, LaTeX) are necessary evils.
-This leads many programs to be terminal based to remove the overhead of GUIs.
+\fBUsability\fP \(en
+The program should do what I want it to do.
+In some cases, this means I want a highly extensible program like dmenu.
+In others, I just want something to browse the web with like firefox.
+The point of this is to say that extensible is good, but it is not a requirement.
 .ITEM
-\fBVIM!\fP \(en
-Vim is one of my favorite programs of all time.
-As such, any program that uses, or can be made to use, vim bindings is a big plus. 
+\fBCustomization\fP \(en
+This falls closely in line with usability.
+If a program doesn't behave exactly as I want by default, but it can made to do so, that is okay.
+Obviously, a perfect out of the box solution is ideal, but that will only rarely happen.
+In general, being able to customize a program to the desired result is a hallmark of good software.
 .ITEM
-\fBCustomization and Replaceability\fP \(en
-Programs installed on this system should be replaceable and highly customizable.
-This allows the user to make adjustments not only to the configuration of installed programs, but also to which programs are installed. 
+\fBVim\fP \(en
+This seems like a silly guideline to follow, but if a program uses vim bindings (or can be made to) I will prefer it to an identical program that does not.
+Vim has become such a huge part of my daily workflow that the key bindings are second nature, so I want to use them everywhere.
 .LIST OFF
-.HEADING 2 "The Status Bar"
-.PP
-This section has not been completed yet.
-.HEADING 2 "Program Specific Information"
-At any time, you can press \f(CWMod+F2\fP to bring up a menu for more information on various programs.
-Simply select the program you want, and a PDF similar to this will be opened containing keybindings and general information about that program's configuration.
-Additionally, you can always refer to the man pages for the various programs, or in some cases the program's built in help function.
-.HEADING 1 "Key Bindings"
-.PP
-The bindings in this document can be found in the file \f(CW~/.config/i3/config\fP which can be opened via \f(CWei3\fP in the terminal.
-All of these bindings can be easily changed to your liking.
-.HEADING 2 "Basic Window Shortcuts"
-Play around with the bindings and things should start feeling comfortable\c
-.FOOTNOTE
-All of these shortcuts are case sensitive.
-i.e. \f(CWMod+W\fP is equivalent to \f(CWMod+Shift+w\fP.
-.FOOTNOTE OFF
- . If something isn't working for you, go ahead and change things around.
+Now, I want to take a second to talk about free and open source software (FOSS).
+This is something a lot of people care a lot about, but to me it is not very important.
+What I care about is having a good program.
+With that said, it is often the case the best program for the job is FOSS. 
+Proprietary software needs to be non-replaceable otherwise people won't pay for it.
+What that means is that proprietary software adds unnecessary features, and becomes large and uncustomizable.
+That is the opposite of what I want, so FOSS is often the best option.
+.HEADING 2 "Components of the System"
 .LIST
 .ITEM
-\f(CWMod+Enter\fP \(en Launch a terminal (default is \f(CWURxvt\fP, use \f(CWman urxvt\fP for more information)
+\fBWindow Manager or Desktop Environment\fP \(en
+This is the decision that will define how you use your computer.
+There are 3 main types of window managers, compositing, stacking, and tiling.
+Compositing is the most broad, and allows all windows to be drawn independently of all other widows.
+Stacking does exactly what it says it does, all windows get stacked on top of each other.
 .ITEM
-\f(CWMod+q\fP \(en Close window
+\fBTerminal Emulator\fP \(en
 .ITEM
-\f(CWMod+Q\fP \(en Force close window
+\fBShell\fP \(en
 .ITEM
-\f(CWMod+d\fP \(en \f(CWdmenu\fP (program launcher, use when a program does not have a shortcut)
+\fBText Editor\fP \(en
 .ITEM
-\f(CWMod+t\fP \(en Toggle window spawn direction (veritcal/horizontal)
+\fBWeb Browser\fP \(en
 .ITEM
-\f(CWMod+f\fP \(en Toggle fullscreen mode on currently selected window
+\fBFile Browser\fP \(en
 .ITEM
-\f(CWMod+h/j/k/l\fP \(en Change selected window
+\fBImage Viewer\fP \(en
 .ITEM
-\f(CWMod+H/J/K/L\fP \(en Move selected window
+\fBPDF Viewer\fP \(en
 .ITEM
-\f(CWMod+Y/U/I/O\fP \(en Resize windows
+\fBE-mail Client\fP \(en
 .ITEM
-\f(CWMod+D\fP \(en Remove all gaps
+\fBFonts\fP \(en
 .ITEM
-\f(CWMod+T\fP \(en Reset gaps to default
+\fBPDF Generator\fP \(en
 .LIST OFF
-.HEADING 2 "Programs"
-This list uses the set of programs I prefer.
-If you have alternative or additional programs, you can add them to the i3 configuration.
 .LIST
 .ITEM
-\f(CWMod+w\fP \(en Graphical browser (default is \f(CWfirefox\fP)
+\fBWeb Browser\fP \(en
+Every non-terminal computer likely needs a web browser.
+The options in the space are much broader than you might expect, but I tend to play it fairly safe.
+I personally use firefox with vimium, but another keyboard driven browser is qute browser.
+Another interesting option is surf, developed by the suckless group.
 .ITEM
-\f(CWMod+W\fP \(en Command line browser (default is \f(CWw3m\fP, see \f(CWman w3m\fP for more information)
+\fBText Editor\fP \(en
+The answer to this is neovim, and nothing else.
+But if you want to use the wrong answer, you can always use emacs or even nano if you're crazy. 
 .ITEM
-\f(CWMod+r\fP \(en File browser (default is \f(CWranger\fP, see \f(CWman ranger\fP for more information)
+\fBShells\fP \(en
+I will always recommend one of bash, zsh, or fish.
+I will also suggest a strict posix compliant shell to be linked as /bin/sh.
+Some examples of these are dash or mksh.
+When deciding between your primary shell, bash is the most basic, zsh adds a lot of customizability, and fish has nicer defaults.
+Fish is not posix compliant, so you need to be careful running scripts in fish.
 .ITEM
-\f(CWMod+y\fP \(en Drop down calculator
+\fBProgram Launcher\fP \(en
+This is an interesting item, because it is not strictly necessary.
+All of these programs function similarly, but the UX is different for each.
+The options are dmenu, rofi, or fzf. 
+Both dmenu and rofi are fairly straight forward to setup as a program launcher, but fzf is a bit more challenging.
+Fzf is a command line tool, so it must be run inside a shell.
+This requires a terminal be opened in order to run fzf as a launcher.
+There are some ways to use floating windows to create a similar experience to rofi, but those are not covered here.
 .ITEM
-\f(CWMod+u\fP \(en Drop down terminal (uses \f(CWtmux\fP)
-.ITEM
-\f(CWMod+i\fP \(en Calendar (default is \f(CWcalcurse\fP, see \f(CWman calcurse\fP for more information)
-.ITEM
-\f(CWMod+o\fP \(en htop (system usage and process information)
-.ITEM
-\f(CWMod+m\fP \(en matlab (see \f(CWpython\fP for a better language j/k)
-.LIST OFF
-.HEADING 2 "System"
-.LIST
-.ITEM
-\f(CWMod+x\fP \(en Lock screen (default is \f(CWi3lock\fP)
-.ITEM
-\f(CWMod+X\fP \(en Shutdown (will prompt for confirmation)
-.ITEM
-\f(CWMod+Shift+Backspace\fP \(en Reboot (will prompt for confirmation
-.ITEM
-\f(CWMod+Shift+Escape\fP \(en Exit i3 (will prompt for confirmation)
+\fBPDF Viewer\fP \(en
+I really enjoy zathura as my pdf viewer.
+It has vim bindings, is lightweight, and is easy to use.
+There are some other options that are more mouse based, or resource heavy, but I haven't found any reason to switch.
 .LIST OFF

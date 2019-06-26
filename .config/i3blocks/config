@@ -2,11 +2,6 @@ command=~/.local/bin/statusbar/$BLOCK_NAME
 separator_block_width=30
 markup=pango
 
-[mailbox]
-label=📬
-interval=180
-signal=12
-
 [clock]
 label=📅
 interval=30
@@ -15,13 +10,6 @@ interval=30
 interval=18000
 signal=5
 
-[internet]
-interval=10
-
 [volume]
 interval=once
 signal=10
-
-[battery]
-command=~/.local/bin/statusbar/battery BAT1
-interval=5

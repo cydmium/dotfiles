@@ -26,7 +26,7 @@ export ZSHRC=$HOME/.zshrc
 export XINITRC=$HOME/.xinitrc
 export XRESOURCES=$HOME/.Xresources
 export FILE="ranger"
-export TERMINAL="urxvt"
+export TERMINAL="urxvt256c-ml"
 export READER="zathura"
 
 if [[ "$(tty)" = "/dev/tty1" ]]; then

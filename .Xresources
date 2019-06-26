@@ -27,9 +27,10 @@
 *color15:	#ebdbb2
 
 URxvt.background:	#282828
-! URxvt.letterSpace:	1
+!URxvt.letterSpace:	1
 ! URxvt.font:	xft:Inconsolata for Powerline:sytle=Medium:pixelsize=36,xft:Inconsolata Nerd Font Mono,xft:Powerlinesymbols,xft:FontAwesome
-URxvt.font:	xft:Iosevka:sytle=Medium:pixelsize=36,xft:FontAwesome
+URxvt.font:	xft:Iosevka Nerd Font Mono:pixelsize=18,xft:FontAwesome
+!URxvt.font:	xft:Inconsolata Nerd Font Mono:sytle=Regular:pixelsize=18,xft:FontAwesome
 URxvt.cursorColor:	#ebdbb2
 URxvt.scrollBar:	false
 

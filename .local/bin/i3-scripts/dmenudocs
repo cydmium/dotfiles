@@ -1,5 +1,5 @@
 #!/bin/bash
 # Launch a dmenu prompt to select which documentation item to view
 
-choice=$(printf "vim\\nzsh\\ntmux" | dmenu -fn "Inconsolata-25")
+choice=$(printf "vim\\nzsh\\ntmux" | dmenu -fn "Iosevka-12")
 groff -mom $HOME/.local/share/docs/$choice.mom -Tpdf | zathura -

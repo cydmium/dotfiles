@@ -6,8 +6,7 @@ else
 	let s:plugpath='~/.vim/autoload/plug.vim'
 endif
 if empty(glob(s:plugpath))
-  silent !curl -fLo s:plugpath --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 

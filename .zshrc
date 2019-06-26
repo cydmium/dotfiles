@@ -76,7 +76,7 @@ alias :q='exit'
 alias config='/usr/bin/git --git-dir=$HOME/.dots/ --work-tree=$HOME'
 
 ### Added by Zplugin's installer
-source '/home/david/.zplugin/bin/zplugin.zsh'
+source '/home/drichardson42/.zplugin/bin/zplugin.zsh'
 ### End of Zplugin's installer chunk
 
 # Plugin Installation {{{
@@ -100,7 +100,7 @@ zplugin ice wait"0" atload"_zsh_autosuggest_start" lucid
 zplugin load zsh-users/zsh-autosuggestions
 # Powerline Prompt
 # Powerline {{{
-DEFAULT_USER=david
+DEFAULT_USER=drichardson42
 POWERLEVEL9K_VCS_STASH_ICON="\ue701"
 POWERLEVEL9K_VCS_STAGED_ICON="\uf187"
 POWERLEVEL9K_VCS_BOOKMARK_ICON="\uf461"
@@ -143,8 +143,8 @@ bindkey '^k' autosuggest-execute
 bindkey '^l' autosuggest-fetch
 # }}}
 
-source /usr/share/fzf/completion.zsh
-source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/shell/completion.zsh
+source /usr/share/fzf/shell/key-bindings.zsh
 export FZF_DEFAULT_OPTS='--height 40% --border'
 # fe - opens file in $EDITOR instead of returning it to command line
 fe() {

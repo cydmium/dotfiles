@@ -57,7 +57,7 @@ elif command -v vim > /dev/null 2>&1; then
 	alias vi=vim
 fi
 
-alias ls='ls --color'
+alias ls='ls --color --group-directories-first'
 alias r=$FILE
 
 # Edit Configs
@@ -121,7 +121,7 @@ POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='236'
 POWERLEVEL9K_DIR_HOME_FOREGROUND='236'
 POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='236'
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status vi_mode vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status go_version virtualenv vcs)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
 POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=" "
@@ -169,3 +169,9 @@ fbr() {
            fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
+
+export PATH="$PATH:$HOME/.pyenv/bin"
+export WORKON_HOME=~/.ve
+export PROJECT_HOME=~/projects
+eval "$(pyenv init -)"
+pyenv virtualenvwrapper_lazy

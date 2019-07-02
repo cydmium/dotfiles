@@ -2,6 +2,8 @@
 " Automatically add vim-plug if not installed
 if has('nvim')
 	let s:plugpath='~/.config/nvim/autoload/plug.vim'
+        let g:python_host_prog = '/home/drichardson42/.pyenv/versions/2.7.16/envs/tools2/bin/python'
+        let g:python3_host_prog = '/home/drichardson42/.pyenv/versions/3.7.3/envs/tools3/bin/python'
 else
 	let s:plugpath='~/.vim/autoload/plug.vim'
 endif
@@ -24,7 +26,7 @@ Plug 'tpope/vim-vinegar'
 " Better start screen - TODO: Setup sessions that are of interest
 Plug 'mhinz/vim-startify'
 " Linter and Language Server Protocol Implementation - TODO: Setup for LaTeX
-"let g:ale_completion_enabled=1
+let g:ale_completion_enabled=1
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed='never'
 " Snippets - TODO: Move good vim-snippets to personal dir and remove rest

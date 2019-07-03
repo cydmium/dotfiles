@@ -2,6 +2,8 @@
 " Automatically add vim-plug if not installed
 if has('nvim')
 	let s:plugpath='~/.config/nvim/autoload/plug.vim'
+        let g:python_host_prog='/home/david/.pyenv/versions/neovim2/bin/python'
+        let g:python3_host_prog='/home/david/.pyenv/versions/neovim3/bin/python'
 else
 	let s:plugpath='~/.vim/autoload/plug.vim'
 endif
@@ -25,11 +27,13 @@ Plug 'tpope/vim-vinegar'
 " Better start screen - TODO: Setup sessions that are of interest
 Plug 'mhinz/vim-startify'
 " Linter and Language Server Protocol Implementation - TODO: Setup for LaTeX
-"let g:ale_completion_enabled=1
+let g:ale_completion_enabled=1
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed='never'
 " Snippets - TODO: Move good vim-snippets to personal dir and remove rest
 Plug 'SirVer/ultisnips'
+" Comment Plugin
+Plug 'tpope/vim-commentary'
 "Plug 'honza/vim-snippets'
 " Autocomplete matching pairs
 Plug 'Raimondi/delimitMate'
@@ -46,6 +50,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 " Show Rainbow Parenthesis
 Plug 'junegunn/rainbow_parentheses.vim'
+" Tag handling
+Plug 'ludovicchabant/vim-gutentags'
 " Better Markdown highlighting
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " LaTeX Engine
@@ -87,10 +93,10 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
 " Copy to system clipboard
-vnoremap ,y "+y
-nnoremap ,y "+y
-nnoremap ,p "+p
-nnoremap ,P "+P
+vnoremap ,y "*y
+nnoremap ,y "*y
+nnoremap ,p "*p
+nnoremap ,P "*P
 
 " Delete/change to empty buffer
 nnoremap ,d "_d
@@ -143,7 +149,7 @@ set completeopt=menuone,longest,preview
 "       run command to open completion menu
 "       if pop-up completion menu is open:
 "               select first item, but do not put it in the file
-"       else: 
+"       else:
 "               do nothing
 inoremap <expr> ,,n pumvisible() ? "<c-n>" : '<c-x><c-n><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
 inoremap <expr> ,,p pumvisible() ? "<c-p>" : '<c-x><c-p><c-r>=pumvisible() ? "\<lt>up>" : ""<cr>'
@@ -172,7 +178,7 @@ set backspace=indent,eol,start	" Make backspace work like expected
 """ Autocommands
 augroup all_files
     autocmd!
-    autocmd Filetype * setlocal formatoptions-=ro   " Don't auto-add comment characters on new lines
+    " autocmd Filetype * setlocal formatoptions-=ro   " Don't auto-add comment characters on new lines
 augroup end
 
 augroup vimrc
@@ -248,3 +254,9 @@ nnoremap ,f :Files<cr>
 nnoremap ,t :Tags<cr>
 nnoremap ,gf :GFiles<cr>
 command! W write " Overwrite :W corresponding to windows
+
+""" Backup, Swap, and Undo file cleanliness
+set backupdir=.backup/,~/.backup//,/tmp//
+set directory=.swp/,~/.swp//,/tmp//
+set undodir=.undo/,~/.undo//,/tmp//
+" set undofile  " Persistent Undos

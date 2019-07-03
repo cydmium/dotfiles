@@ -5,7 +5,7 @@ setlocal foldmethod=syntax
 augroup python_files
     autocmd!
     autocmd BufWritePre * %s/\s\+$//e
-    autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+    autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
 augroup end
 if executable('pyls')
     let b:ale_linters = ['pyls']

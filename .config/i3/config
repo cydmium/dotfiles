@@ -51,6 +51,11 @@
 
 # }}}
 
+# Webcam defaults {{{
+	for_window [title="mpvfloat"] floating enable
+	for_window [title="mpvfloat"] sticky enable
+# }}}
+
 # External Scripts {{{
 
 	# Compton
@@ -135,6 +140,8 @@ bar {
 	bindsym $mod+m			exec --no-startup-id matlab -desktop
 
 	bindsym $mod+e			exec $term -e neomutt && pkill -RTMIN+12 i3blocks
+
+	bindsym $mod+c			exec --no-startup-id camtoggle
 	# }}}
 
 	# Function Keys {{{

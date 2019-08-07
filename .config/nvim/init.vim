@@ -26,23 +26,27 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-vinegar'
 " Better start screen - TODO: Setup sessions that are of interest
 Plug 'mhinz/vim-startify'
+" TODO: Consider adding workspace plugin, probably not needed, but look at use
+" case.
 " Linter and Language Server Protocol Implementation - TODO: Setup for LaTeX
+" TODO: Consider ripping out ALE and adding LanguageClient-neovim + deoplete
+" (ALE for symbols?)
 let g:ale_completion_enabled=1
 Plug 'w0rp/ale'
 let g:ale_lint_on_text_changed='never'
 " Snippets - TODO: Move good vim-snippets to personal dir and remove rest
 Plug 'SirVer/ultisnips'
-" Comment Plugin
-Plug 'tpope/vim-commentary'
-"Plug 'honza/vim-snippets'
+"Plug 'honza/vim-snippets' " TODO Pull good snippets and delete
 " Autocomplete matching pairs
 Plug 'Raimondi/delimitMate'
+" Comment Plugin
+Plug 'tpope/vim-commentary'
+" TODO: Consider adding vim-surround, need to better understand use case.
 "let delimitMate_expand_cr=1
 let delimitMate_expand_space=1
 let delimiteMate_jump_expansion=1
 " FZF
 Plug 'junegunn/fzf.vim'
-" TODO: Look into various comment plugins
 " Status bar must look beautiful
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -58,6 +62,8 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'lervag/vimtex', { 'for': 'tex' }
 " Beautified prose editor
 Plug 'junegunn/goyo.vim', {'on': 'Goyo' }
+Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
+let g:limelight_conceal_ctermfg = 240
 
 call plug#end()
 
@@ -142,6 +148,7 @@ set completeopt=menuone,longest,preview
 " Easier complete mode commands (removes ctrl requirements)
 " TODO: Find a better way to write all of these so I can reuse them
 " TODO: Rewrite ,<tab> to try completers until it finds one that's not empty
+" TODO: Rip this out and replace with deoplete + LSP
 " These mappings are complex, so a simpler explanation is below
 " if pop-up completion menu is already open:
 "       cycle through with ctrl+letter
@@ -217,8 +224,6 @@ function! s:goyo_enter()
     let b:quitting_bang = 0
     autocmd QuitPre <buffer> let b:quitting = 1
     cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-    set nonumber norelativenumber
-    set linebreak
 endfunction
 
 function! s:goyo_leave()
@@ -230,9 +235,6 @@ function! s:goyo_leave()
             qa
         endif
     endif
-    colorscheme gruvbox
-    set nolinebreak
-    set number relativenumber
 endfunction
 
 augroup goyo_mode
@@ -253,10 +255,32 @@ nnoremap ,b :Buffers<cr>
 nnoremap ,f :Files<cr>
 nnoremap ,t :Tags<cr>
 nnoremap ,gf :GFiles<cr>
-command! W write " Overwrite :W corresponding to windows
+" command! W write " Overwrite :W corresponding to windows
 
 """ Backup, Swap, and Undo file cleanliness
 set backupdir=.backup/,~/.backup//,/tmp//
 set directory=.swp/,~/.swp//,/tmp//
 set undodir=.undo/,~/.undo//,/tmp//
-" set undofile  " Persistent Undos
+" set undofile  " Persistent Undos TODO: Consider if I want this
+
+""" Prose Mode
+let b:prose = 0
+func! ProseMode()
+    if b:prose
+	let b:prose = 0
+	:Goyo
+	:Limelight!
+    else
+	setlocal textwidth=80
+	setlocal formatoptions=ant1jqc
+	let b:prose = 1
+	setlocal noexpandtab
+	set complete+=s
+	nnoremap <f5> :set spell! spellland=en_us
+	set formatprg=par
+	:Goyo
+	:Limelight
+    endif
+endfunc
+
+command! Prose call ProseMode()

@@ -1,6 +1,6 @@
 *background: 	#282828
 *foreground:	#ebdbb2
-*cursor:	#ebdbb2
+! *cursor:	#ebdbb2
 ! Black and Dark Grey
 *color0:	#282828
 *color8:	#928374
@@ -37,7 +37,7 @@ URxvt.scrollBar:	false
 ! Extensions
 URxvt.perl-ext-common: default,resize-font,url-select,keyboard-select
 ! Url-Select
-URxvt.keysym.Control-f: perl:url-select:select_next
+!URxvt.keysym.Control-f: perl:url-select:select_next
 URxvt.url-select.underline: true
 URxvt.url-select.launcher: firefox
 ! Keyboard-select

@@ -57,7 +57,7 @@ elif command -v vim > /dev/null 2>&1; then
 	alias vi=vim
 fi
 
-alias ls='ls --color'
+alias ls='ls --color --group-directories-first'
 alias r=$FILE
 
 # Edit Configs
@@ -170,7 +170,8 @@ fbr() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
-export PATH="$PATH:$HOME/.pyenv/bin"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PATH:$PYENV_ROOT/bin"
 export WORKON_HOME=~/.ve
 export PROJECT_HOME=~/projects
 eval "$(pyenv init -)"

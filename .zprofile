@@ -28,8 +28,6 @@ export XRESOURCES=$HOME/.Xresources
 export FILE="ranger"
 export TERMINAL="urxvt"
 export READER="zathura"
-export GOPATH=$HOME/.local/go
-export PATH=$PATH:$GOPATH/bin
 
 if [[ "$(tty)" = "/dev/tty1" ]]; then
 	pgrep i3 || startx

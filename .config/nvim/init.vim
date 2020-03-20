@@ -1,73 +1,166 @@
-""" Plugins
-" Automatically add vim-plug if not installed
+"" Plugins
+""" Automatically add vim-plug if not installed
 if has('nvim')
-	let s:plugpath='~/.config/nvim/autoload/plug.vim'
-        let g:python_host_prog='/home/david/.pyenv/versions/neovim2/bin/python'
-        let g:python3_host_prog='/home/david/.pyenv/versions/neovim3/bin/python'
+  let s:plugpath='~/.config/nvim/autoload/plug.vim'
+  let g:python_host_prog='~/.pyenv/versions/neovim2/bin/python'
+  let g:python3_host_prog='~/.pyenv/versions/neovim3/bin/python'
 else
-	let s:plugpath='~/.vim/autoload/plug.vim'
+  let s:plugpath='~/.vim/autoload/plug.vim'
 endif
 if empty(glob(s:plugpath))
-  silent !curl -fLo s:plugpath --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent execute '!curl -fLo ' . s:plugpath . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+""" Plugin List
 if has('nvim')
 	call plug#begin('~/.config/nvim/plugged')
 else
 	call plug#begin('~/.vim/plugged')
 endif
-
-" Git is good
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-" Better netrw
-Plug 'tpope/vim-vinegar'
-" Better start screen - TODO: Setup sessions that are of interest
-Plug 'mhinz/vim-startify'
-" TODO: Consider adding workspace plugin, probably not needed, but look at use
-" case.
-" Linter and Language Server Protocol Implementation - TODO: Setup for LaTeX
-" TODO: Consider ripping out ALE and adding LanguageClient-neovim + deoplete
-" (ALE for symbols?)
-let g:ale_completion_enabled=1
-Plug 'w0rp/ale'
-let g:ale_lint_on_text_changed='never'
-" Snippets - TODO: Move good vim-snippets to personal dir and remove rest
-Plug 'SirVer/ultisnips'
-"Plug 'honza/vim-snippets' " TODO Pull good snippets and delete
-" Autocomplete matching pairs
-Plug 'Raimondi/delimitMate'
-" Comment Plugin
-Plug 'tpope/vim-commentary'
-" TODO: Consider adding vim-surround, need to better understand use case.
-"let delimitMate_expand_cr=1
-let delimitMate_expand_space=1
-let delimiteMate_jump_expansion=1
-" FZF
-Plug 'junegunn/fzf.vim'
-" Status bar must look beautiful
+" Colorscheme(s)
+Plug 'morhetz/gruvbox'
+Plug 'sjl/badwolf'
+" Airline - Beautify the status bar
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" Colorscheme
-Plug 'morhetz/gruvbox'
-" Show Rainbow Parenthesis
+" Git Integration
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+" Vinegar - Better netrw
+Plug 'tpope/vim-vinegar'
+" Commentary - Easy comments
+Plug 'tpope/vim-commentary'
+" Vim-Surround - Change surrounding characters
+Plug 'tpope/vim-surround'
+" Vim-Repeat - . repeats last tpope command
+Plug 'tpope/vim-repeat'
+" Ultisnips - Snippet Engine
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+" DelimitMate - Autocomplete matching pairs
+Plug 'Raimondi/delimitMate'
+" Rainbow Parentheses - Visualize nested parentheses
 Plug 'junegunn/rainbow_parentheses.vim'
-" Tag handling
-Plug 'ludovicchabant/vim-gutentags'
-" Better Markdown highlighting
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-" LaTeX Engine
-Plug 'lervag/vimtex', { 'for': 'tex' }
-" Beautified prose editor
-Plug 'junegunn/goyo.vim', {'on': 'Goyo' }
-Plug 'junegunn/limelight.vim', {'on': 'Limelight'}
-let g:limelight_conceal_ctermfg = 240
+" FZF - Fuzzy Searching
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+" Goyo - Distraction free editor
+Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
+" Conquer of Completion - LSP Plugin + Completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Vimtex - Best Latex support
+Plug 'lervag/vimtex', {'for': 'tex'}
 
 call plug#end()
+""" Configuration
+"""" Goyo
+nnoremap ,g :Goyo<cr>
+augroup goyo_mode
+  autocmd!
+  autocmd User GoyoEnter nested call <SID>goyo_enter()
+  autocmd User GoyoLeave nested call <SID>goyo_leave()
+  autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
+augroup end
+function! s:goyo_enter()
+  " Goyo exits on :q if it is the only open buffer
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+  set nonumber norelativenumber
+  set linebreak
+endfunction
 
-""" Remappings
+function! s:goyo_leave()
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+  colorscheme gruvbox
+  set nolinebreak
+  set number relativenumber
+endfunction
+"""" Snippets
+" imap <c-j> <plug>(coc-snippets-expand-jump)
+" vmap <c-j> <plug>(coc-snippets-select)
+"let g:coc_snippet_next = '<c-j>'
+"let g:coc_snippet_prev = '<c-k>'
+imap <plug>(coc-snippets-expand-jump) <nop>
+imap <plug>(coc-snippets-expand) <nop>
+let g:UltiSnipsExpandTrigger='<c-j>'
+let g:ultisnips_python_style='numpy'
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+"""" Fuzzy Finding
+nnoremap ,b :Buffers<cr>
+nnoremap ,f :Files<cr>
+nnoremap ,t :Tags<cr>
+nnoremap ,gf :GFiles<cr>
+"""" Delimit Mate
+let delmitMate_expand_space=1
+let delimitMate_jump_expansion=1
+"""" CoC
+" Usage tab for completion
+inoremap <silent><expr> <tab>
+  \ pumvisible() ? "\<C-n>" :
+  \ <SID>check_back_space() ? "\<TAB>" :
+  \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Confirm completion with <cr>
+"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Goto
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap ,rn <Plug>(coc-rename)
+
+" Fix autofix problem of current line
+nmap ,qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+"" Remappings
+""" Quality of Life
 " Better escape
 inoremap jk <esc>
 
@@ -76,7 +169,13 @@ nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
 vnoremap <expr> j v:count ? 'j' : 'gj'
 vnoremap <expr> k v:count ? 'k' : 'gk'
+" Split Movement
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
 
+""" Additional Functionality
 " Quickly edit vimrc
 nnoremap ,ev :edit $MYVIMRC<cr>
 nnoremap ,sv :source $MYVIMRC<cr>
@@ -87,200 +186,82 @@ nnoremap ,ex :Explore<cr>
 " Repeat Tabbing
 vnoremap ,> >gv
 vnoremap ,< <gv
-
-" Spell check
-nnoremap ,sc :setlocal spell! spelllang=en_us<cr>
-inoremap ,sc <esc>:setlocal spell! spelllang=en_us<cr>i
-
-" Split Movement
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
-
-" Copy to system clipboard
-vnoremap ,y "*y
-nnoremap ,y "*y
-nnoremap ,p "*p
-nnoremap ,P "*P
-
-" Delete/change to empty buffer
+" Copy/Paste to/from system clipboard
+vnoremap ,y "+y
+nnoremap ,y "+y
+nnoremap ,p "+p
+nnoremap ,P "+P
+" Delete/change to empty register
 nnoremap ,d "_d
 nnoremap ,c "_c
 vnoremap ,d "_d
 vnoremap ,c "_c
-
-""" Visualization Options
-set showmatch	" Show matching parens/brackets/braces
-set number
-set relativenumber
-set cursorline
-
-""" Search Options
-set incsearch       " Search as you type
-set hlsearch        " Highlights search matches
-set ignorecase      " Case insensitive
-set smartcase       " Case sensititve if using caps
+" Spell check toggle
+nnoremap ,sc :setlocal spell! spelllang=en_us<cr>
+inoremap ,sc <esc>:setlocal spell! spelllang=en_us<cr>i
 " Turn off highlighting
 nnoremap ,<space> :nohlsearch<cr>
 
-""" Fold Settings
-set foldenable
-set foldnestmax=5	" Max of 5 folds deep
-set foldlevelstart=6	" Start 1 fold over max (all open by default)
-
-""" Buffers
-" List open buffers and allow selection
-set hidden	" Allow switching buffers without writing
-" Split tend towards bottom right corner
-set splitright
-set splitbelow
-
+"" User Interface
 """ File Formatting
 set autoindent
 filetype plugin indent on
-
-""" Autocompletion
-set wildmenu
-set wildmode=longest,list,full
-set complete+=kspell
-set completeopt=menuone,longest,preview
-" Easier complete mode commands (removes ctrl requirements)
-" TODO: Find a better way to write all of these so I can reuse them
-" TODO: Rewrite ,<tab> to try completers until it finds one that's not empty
-" TODO: Rip this out and replace with deoplete + LSP
-" These mappings are complex, so a simpler explanation is below
-" if pop-up completion menu is already open:
-"       cycle through with ctrl+letter
-" else:
-"       run command to open completion menu
-"       if pop-up completion menu is open:
-"               select first item, but do not put it in the file
-"       else:
-"               do nothing
-inoremap <expr> ,,n pumvisible() ? "<c-n>" : '<c-x><c-n><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> ,,p pumvisible() ? "<c-p>" : '<c-x><c-p><c-r>=pumvisible() ? "\<lt>up>" : ""<cr>'
-inoremap <expr> ,,k pumvisible() ? "<c-k>" : '<c-x><c-k><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> ,,] pumvisible() ? "<c-]>" : '<c-x><c-]><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> ,,d pumvisible() ? "<c-d>" : '<c-x><c-d><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> ,,u pumvisible() ? "<c-u>" : '<c-x><c-u><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> ,,o pumvisible() ? "<c-o>" : '<c-x><c-o><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> ,<tab> pumvisible() ? "<c-p>" : '<c-x><c-p><c-r>=pumvisible() ? "\<lt>up>" : ""<cr>'
-" ctrl+l does not cooperate with selected completion items
-inoremap ,,l <c-x><c-l>
-" Let generic ctrl+n/p work the same as the completion mode remappings
-inoremap <expr> <c-n> pumvisible() ? "<c-n>" : '<c-n><c-r>=pumvisible() ? "\<lt>down>" : ""<cr>'
-inoremap <expr> <c-p> pumvisible() ? "<c-p>" : '<c-p><c-r>=pumvisible() ? "\<lt>up>" : ""<cr>'
-" Let tab cycle completion pop-up
-imap <expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
-imap <expr> <s-tab> pumvisible() ? "\<c-p>" : "<plug>delimitMateS-Tab"
-" Enter selects item - Must use imap here to work with <plug>
-"inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "<c-g>u\<cr>"
-imap <expr> <cr> pumvisible() ? "\<c-y>" : "<c-g>u<Plug>delimitMateCR"
-
-""" Extra Options
-set modelines=1
-set backspace=indent,eol,start	" Make backspace work like expected
-
-""" Autocommands
-augroup all_files
-    autocmd!
-    " autocmd Filetype * setlocal formatoptions-=ro   " Don't auto-add comment characters on new lines
-augroup end
-
-augroup vimrc
-    autocmd!
-    autocmd bufwritepost $MYVIMRC source $MYVIMRC
-augroup END
-
-augroup x11
-    autocmd!
-    autocmd bufwritepost *Xresources,*Xdefaults !xrdb %
-augroup end
-
 """ Beauty
-colorscheme gruvbox
+" TODO: Do not set noshowmode unless airline is loaded
+" Falls back to default
+silent! colorscheme gruvbox
 augroup beauty
     autocmd!
-    autocmd BufEnter * RainbowParentheses
+    autocmd BufEnter * call RainbowParenthesesCheck()
 augroup end
+" Setup Airline status bar
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#ale#enabled = 1
 let g:airline_theme = 'gruvbox'
 let g:airline_powerline_fonts = 1
 if !exists('g:airline_symbols')
-	let g:airline_symbols={}
+  let g:airline_symbols={}
 endif
 let g:airline_symbols.linenr = ''
 let g:airline_symbols.notexists = ''
 let g:airline_symbols.whitespace = 'Ξ'
 set noshowmode
+""" Cursor location visualization
+set showmatch
+set number
+set relativenumber
+set cursorline
 
-""" goyo changes
-nnoremap ,g :Goyo<cr>
-function! s:goyo_enter()
-    " Goyo exits on :q if it is the only open buffer
-    let b:quitting = 0
-    let b:quitting_bang = 0
-    autocmd QuitPre <buffer> let b:quitting = 1
-    cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-    " Goyo exits on :q if it is the only open buffer
-    if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-        if b:quitting_bang
-            qa!
-        else
-            qa
-        endif
-    endif
-endfunction
-
-augroup goyo_mode
-    autocmd!
-    autocmd User GoyoEnter nested call <SID>goyo_enter()
-    autocmd User GoyoLeave nested call <SID>goyo_leave()
-    autocmd BufRead,BufNewFile /tmp/neomutt* :Goyo
+"" User Experience
+""" Automatically source vimrc
+augroup vimrc
+  autocmd!
+  autocmd bufwritepost $MYVIMRC source $MYVIMRC
 augroup end
-
-""" Snippets
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-setlocal completefunc=snipcomp#ListSnippets
-
-""" FZF
-nnoremap ,b :Buffers<cr>
-nnoremap ,f :Files<cr>
-nnoremap ,t :Tags<cr>
-nnoremap ,gf :GFiles<cr>
-" command! W write " Overwrite :W corresponding to windows
-
-""" Backup, Swap, and Undo file cleanliness
-set backupdir=.backup/,~/.backup//,/tmp//
-set directory=.swp/,~/.swp//,/tmp//
-set undodir=.undo/,~/.undo//,/tmp//
-" set undofile  " Persistent Undos TODO: Consider if I want this
-
-""" Prose Mode
-let b:prose = 0
-func! ProseMode()
-    if b:prose
-	let b:prose = 0
-	:Goyo
-	:Limelight!
-    else
-	setlocal textwidth=80
-	setlocal formatoptions=ant1jqc
-	let b:prose = 1
-	setlocal noexpandtab
-	set complete+=s
-	nnoremap <f5> :set spell! spellland=en_us
-	set formatprg=par
-	:Goyo
-	:Limelight
-    endif
-endfunc
-
-command! Prose call ProseMode()
+""" Searching
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
+""" Folding
+set foldenable
+set foldnestmax=3
+set foldlevelstart=4
+""" Buffers
+set hidden
+" Tend towards bottom right corner
+set splitright
+set splitbelow
+" set diffopt+=vertical
+""" Completion
+set wildmenu
+set wildmode=longest,list,full
+set complete+=kspell
+set completeopt=menuone,longest,preview
+""" Miscelaneous
+set modelines=1
+set backspace=indent,eol,start
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set scrolloff=5

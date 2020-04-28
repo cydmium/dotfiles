@@ -1,0 +1,218 @@
+priority -50
+
+global !p
+texMathZones = ['texMathZone'+x for x in ['A', 'AS', 'B', 'BS', 'C',
+'CS', 'D', 'DS', 'E', 'ES', 'F', 'FS', 'G', 'GS', 'H', 'HS', 'I', 'IS',
+'J', 'JS', 'K', 'KS', 'L', 'LS', 'DS', 'V', 'W', 'X', 'Y', 'Z']]
+
+texIgnoreMathZones = ['texMathText']
+
+texMathZoneIds = vim.eval('map('+str(texMathZones)+", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+
+ignore = texIgnoreMathZoneIds[0]
+
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(
+            i for i in reversed(synstackids)
+            if i in texIgnoreMathZoneIds or i in texMathZoneIds
+        )
+		return first != ignore
+	except StopIteration:
+		return False
+endglobal
+
+snippet pkg "Add package"
+\usepackage${1/(.*)|.*/(?1:[)/}${1:options}${1/(.*)|.*/(?1:])/}{$2}$0
+endsnippet
+
+snippet beg "\begin{} / end{}" bA
+\begin{$1}
+    ${0}
+\end{$1}
+endsnippet
+
+snippet mk "In-line Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+
+snippet dm "Display Math" wA
+\[
+$1
+.\] $0
+endsnippet
+
+context "math()"
+snippet '([A-Za-z])(\d)' "auto subscript" wrA
+`!p snip.rv = match.group(1)`_`!p snip.rv = match.group(2)`
+endsnippet
+
+context "math()"
+snippet '([A-Za-z])_(\d\d)' "auto subscript 2 digits" wrA
+`!p snip.rv = match.group(1)`_{`!p snip.rv = match.group(2)`}
+endsnippet
+
+context "math()"
+snippet td "superscript" iA
+^{$1}$0
+endsnippet
+
+context "math()"
+priority -49
+snippet // "Easy Fraction" iA
+\\frac{${1:${VISUAL}}}{$2}$0
+endsnippet
+
+context "math()"
+snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Numerator Fraction" wrA
+\\frac{`!p snip.rv = match.group(1)`}{$1}$0
+endsnippet
+
+context "math()"
+priority -48
+snippet '^.*\)/' "() Fraction" wrA
+`!p
+stripped = match.string[:-1]
+depth = 0
+i = len(stripped) - 1
+while True:
+	if stripped[i] == ')': depth += 1
+	if stripped[i] == '(': depth -= 1
+	if depth == 0: break;
+	i -= 1
+snip.rv = stripped[0:i] + "\\frac{" + stripped[i+1:-1] + "}"
+`{$1}$0
+endsnippet
+
+priority -50
+
+priority -49
+context "math()"
+snippet bar "bar" iA
+\bar{$1}$0
+endsnippet
+
+priority -48
+context "math()"
+snippet "([a-zA-Z])bar" "bar" riA
+\bar{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority -49
+context "math()"
+snippet hat "hat" iA
+\hat{$1}$0
+endsnippet
+
+priority -48
+context "math()"
+snippet "([a-zA-Z])hat" "hat" riA
+\hat{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority -49
+context "math()"
+snippet tilde "tilde" iA
+\tilde{$1}$0
+endsnippet
+
+priority -48
+context "math()"
+snippet "([a-zA-Z])tilde" "tilde" riA
+\tilde{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority -49
+context "math()"
+snippet dot "dot" i
+\dot{$1}$0
+endsnippet
+
+priority -48
+context "math()"
+snippet "([a-zA-Z])dot" "dot" ri
+\dot{`!p snip.rv=match.group(1)`}
+endsnippet
+
+priority -50
+context "math()"
+snippet sum "Summation" wA
+\sum_{$1}^{$2} $0
+endsnippet
+
+context "math()"
+snippet int "Integral" wA
+\int_{$1}^{$2} $0
+endsnippet
+
+context "math()"
+snippet inf "Infinity" wA
+\infty
+endsnippet
+
+context "math()"
+priority -49
+snippet dfun "Define Function" wA
+f \colon ${1:\R} \to ${2:\R} \colon x \mapsto $3
+endsnippet
+
+context "math()"
+priority -50
+snippet fun "Function" wA
+f \colon ${1:\R} \to ${2:\R} $0
+endsnippet
+
+context "math()"
+snippet !> "Mapsto" wA
+\mapsto 
+endsnippet
+
+context "math()"
+snippet cc "Subset" wA
+\subset 
+endsnippet
+
+context "math()"
+snippet mat "Matrix" w
+\begin{bmatrix}
+    $1
+\end{bmatrix} $0
+endsnippet
+
+context "math()"
+snippet det "Determinant" w
+\begin{vmatrix}
+    $1
+\end{vmatrix} $0
+endsnippet
+
+context "math()"
+snippet part "Partial/Partial t" w
+\frac{\partial}{\partial t} $0
+endsnippet
+
+snippet bold "Bold text" w
+\textbf{$1}$0
+endsnippet
+
+context "math()"
+snippet Phi "Phi" wA
+\Phi
+endsnippet
+
+context "math()"
+snippet phi "phi" wA
+\phi
+endsnippet
+
+context "math()"
+snippet lam "lam" wA
+\lambda
+endsnippet

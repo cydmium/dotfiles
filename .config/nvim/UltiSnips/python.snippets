@@ -82,15 +82,9 @@ SPHINX  = 0x3
 GOOGLE  = 0x4
 NUMPY   = 0x5
 JEDI = 0x6
-<<<<<<< HEAD
-SINGLE_QUOTES = "'"
-DOUBLE_QUOTES = '"'
-=======
-
 SINGLE_QUOTES = "'"
 DOUBLE_QUOTES = '"'
 
->>>>>>> c358beaf01bc2eac01e28abe21e541143bf0dfc1
 class Arg(object):
 	def __init__(self, arg):
 		self.arg = arg
@@ -199,7 +193,6 @@ def write_docstring_args(args, snip):
 	else:
 		for arg in args:
 			snip += format_arg(arg, style)
-<<<<<<< HEAD
 def write_google_docstring_args(args, snip):
 	kwargs = [arg for arg in args if arg.is_kwarg()]
 	args = [arg for arg in args if not arg.is_kwarg()]
@@ -246,7 +239,6 @@ def write_slots_args(args, snip):
 	arg_format = quote + '_%s' + quote
 	args = [arg_format % arg for arg in args]
 	snip += '__slots__ = (%s,)' % ', '.join(args)
-<<<<<<< HEAD
 def write_function_docstring(t, snip):
 	"""
 	Writes a function docstring with the current style.

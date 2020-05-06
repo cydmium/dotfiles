@@ -1,6 +1,6 @@
 *background: 	#282828
 *foreground:	#ebdbb2
-*cursor:	#ebdbb2
+! *cursor:	#ebdbb2
 ! Black and Dark Grey
 *color0:	#282828
 *color8:	#928374
@@ -29,6 +29,6 @@
 URxvt.background:	#282828
 ! URxvt.letterSpace:	1
 ! URxvt.font:	xft:Inconsolata for Powerline:sytle=Medium:pixelsize=36,xft:Inconsolata Nerd Font Mono,xft:Powerlinesymbols,xft:FontAwesome
-URxvt.font:	xft:Iosevka:sytle=Medium:pixelsize=22,xft:FontAwesome
+URxvt.font:	xft:Iosevka:sytle=Medium:pixelsize=20,xft:FontAwesome
 URxvt.cursorColor:	#ebdbb2
 URxvt.scrollBar:	false

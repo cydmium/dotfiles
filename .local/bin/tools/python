@@ -1,0 +1,3 @@
+#!/bin/sh
+# Call python in order to properly select virtualenv python in coc
+python "$@"

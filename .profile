@@ -28,3 +28,4 @@ export XRESOURCES=$HOME/.Xresources
 export FILE="ranger"
 export TERMINAL="urxvt"
 export READER="zathura"
+export BIB="$HOME/latex/bibliography.bib"

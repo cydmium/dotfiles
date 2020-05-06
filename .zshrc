@@ -160,8 +160,8 @@ bindkey '^k' autosuggest-execute
 bindkey '^l' autosuggest-fetch
 # }}}
 
-source /usr/share/doc/fzf/completion.zsh
-source /usr/share/doc/fzf/key-bindings.zsh
+source ~/.config/fzf/completion.zsh
+source ~/.config/fzf/key-bindings.zsh
 export FZF_DEFAULT_OPTS='--height 40% --border'
 # fe - opens file in $EDITOR instead of returning it to command line
 fe() {
@@ -187,9 +187,13 @@ fbr() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+# Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PATH:$PYENV_ROOT/bin"
 export WORKON_HOME=~/.ve
 export PROJECT_HOME=~/projects
 eval "$(pyenv init -)"
 pyenv virtualenvwrapper_lazy
+
+# NPM
+export PATH="$PATH:$HOME/.npm-global/bin"

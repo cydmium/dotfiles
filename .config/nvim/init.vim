@@ -55,7 +55,7 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 call plug#end()
 """ Configuration
 """" Goyo
-nnoremap ,g :Goyo<cr>
+" nnoremap ,g :Goyo<cr>
 augroup goyo_mode
   autocmd!
   autocmd User GoyoEnter nested call <SID>goyo_enter()
@@ -105,11 +105,10 @@ let delmitMate_expand_space=1
 let delimitMate_jump_expansion=1
 """" CoC
 " Usage tab for completion
-inoremap <silent><expr> <tab>
-  \ pumvisible() ? "\<C-n>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
+inoremap <silent><expr> <c-n>
+  \ pumvisible() ? "\<c-n>" :
+  \ <SID>check_back_space() ? "\<tab>" :
   \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1

@@ -137,7 +137,7 @@ bar {
 	bindsym $mod+a			gaps inner current plus 5
 	bindsym $mod+Shift+a		gaps inner current minus 5
 
-	bindsym $mod+x			exec --no-startup-id i3lock -e -f -c 1d2021
+	bindsym $mod+x			exec --no-startup-id i3lock-fancy
 	bindsym $mod+Shift+x		exec --no-startup-id prompt "Shutdown computer?" "$shutdown"
 
 	bindsym $mod+m			exec --no-startup-id matlab -desktop

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Launch a dmenu prompt to select which documentation item to view
 
-choice=$(printf "overview\\nvim\\nzsh\\ntmux" | dmenu -fn "Inconsolata-25")
+choice=$(printf "overview\\nvim\\nzsh\\ntmux" | dmenu -fn "Iosevka-14")
 if [ -z "$choice" ]; then
 	exit 1
 else

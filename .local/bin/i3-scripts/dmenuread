@@ -2,7 +2,7 @@
 # dmenu prompt to open a paper in the references folder
 
 reference_dir=$HOME/documents/articles
-choice=$(ls $reference_dir | dmenu -fn "Inconsolata-25")
+choice=$(ls $reference_dir | dmenu -fn "Iosevka-14")
 if [ -z "$choice" ]; then
 	exit 1
 else

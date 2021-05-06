@@ -21,7 +21,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=5000
 SAVEHIST=5000
 setopt appendhistory 
-setopt sharehistory
 setopt incappendhistory
 
 # Assorted Settings

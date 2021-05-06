@@ -2,6 +2,12 @@ fancyhdr
 amsmath
 amssymb
 [english]babel
+csquotes
 listings
 enumitem
 [margin=1.0in]geometry
+[backend=biber, style=numeric]biblatex
+matlab-prettifier
+fancyvrb
+gensymb
+bm

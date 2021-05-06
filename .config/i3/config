@@ -57,7 +57,11 @@
 # }}}
 # Python Plots {{{
 	for_window [class="Matplotlib"] floating enable
+	for_window [class="matplotlib"] floating enable
 # }}}
+#  Feh Images {{{
+        for_window [class="feh"] floating enable
+#  }}}
 
 # External Scripts {{{
 

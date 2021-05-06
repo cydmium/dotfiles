@@ -1,7 +1,7 @@
 #!/bin/bash
 # dmenu prompt to open a paper in the references folder
 
-reference_dir=$HOME/documents/articles
+reference_dir=$HOME/papers
 choice=$(ls $reference_dir | dmenu -fn "Iosevka-14")
 if [ -z "$choice" ]; then
 	exit 1
